@@ -62,9 +62,10 @@
 <img src="../md/image/image3.png" width="700px">
 - MVC, 템플릿 엔진 이미지
 <img src="../md/image/image4.png" width="700px">
-- url `localhost:8080/hello-mvc` 접속 후 내장 톰캣 서버가 스프링으로 넘긴다.
-- 외부에서 파라미터를 받아온다.
-- model.addAttribute(key, value)를 사용하므로 url 창에 넘긴 파라미터를 적음으로써 Thymeleaf 템플릿 엔진 처리 요청
+
+  - url `localhost:8080/hello-mvc` 접속 후 내장 톰캣 서버가 스프링으로 넘긴다.
+  - 외부에서 파라미터를 받아온다.
+  - model.addAttribute(key, value)를 사용하므로 url 창에 넘긴 파라미터를 적음으로써 Thymeleaf 템플릿 엔진 처리 요청
 
 ---
 ### API
