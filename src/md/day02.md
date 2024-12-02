@@ -11,12 +11,14 @@
 - 기능 : 회원 등록, 조회
 - 아직 데이터 저장소가 선정되지 않음(가상의 시나리오)
 <img src="../md/image/image6.png" width="700px">
+
   - 컨트롤러 : 웹 MVC의 컨트롤러 역할
   - 서비스 : 핵심 비즈니스 로직 구현
   - 리포지토리 : 데이터베이스에 접근, 도메인 객체를 DB에 저장하고 관리
   - 도메인 : 비즈니스 도메인 객체, 예)  회원, 주문, 쿠폰 등등 주로 데이터베이스에 저장하고 관리
 - 클래스 의존 관계
 <img src="../md/image/image7.png" width="700px">
+
   - 아직 데이터 저장소가 선정되지 않아서, 우선 인터페이스로 구현 클래스를 변경할 수 있도록 설계
   - 데이터 저장소는 RDB, NoSQL 등등 다양한 저장소를 고민중인 상황으로 가정
   - 개발을 진행하기 위해서 초기 개발 단계에서는 구현체로 가벼운 메모리 기반의 데이터 저장소 사용
@@ -65,45 +67,45 @@
   ```
   
 - 회원 리포지토리 메모리 구현체
-```java
-import hello.hellospring.domain.Member;
-
-import java.util.*;
-
-public class MemoryMemberRepository implements MemberRepository {
- private static Map<Long, Member> store = new HashMap<>();
- 
- private static long sequence = 0L; //1씩 증가 시키기 위한 시퀀스
- 
- @Override
- public Member save(Member member) {
-   member.setId(++sequence);    //member에 id값 추가
-   store.put(member.getId(), member);   //store에 저장
-   return member;
- }
- 
- @Override
- public Optional<Member> findById(Long id) {
-   return Optional.ofNullable(store.get(id));   //Optional로 null인지 확인 가능
- }
- 
- @Override
- public List<Member> findAll() {
-   return new ArrayList<>(store.values());
- }
- 
- @Override
- public Optional<Member> findByName(String name) {
-   return store.values().stream()
-   .filter(member -> member.getName().equals(name))
-   .findAny();
- }
- 
- public void clearStore() { //Test시 하나 종료하면 정리하기 위한 메소드
-   store.clear();
- }
-}
-```
+  ```java
+  import hello.hellospring.domain.Member;
+  
+  import java.util.*;
+  
+  public class MemoryMemberRepository implements MemberRepository {
+   private static Map<Long, Member> store = new HashMap<>();
+   
+   private static long sequence = 0L; //1씩 증가 시키기 위한 시퀀스
+   
+   @Override
+   public Member save(Member member) {
+     member.setId(++sequence);    //member에 id값 추가
+     store.put(member.getId(), member);   //store에 저장
+     return member;
+   }
+   
+   @Override
+   public Optional<Member> findById(Long id) {
+     return Optional.ofNullable(store.get(id));   //Optional로 null인지 확인 가능
+   }
+   
+   @Override
+   public List<Member> findAll() {
+     return new ArrayList<>(store.values());
+   }
+   
+   @Override
+   public Optional<Member> findByName(String name) {
+     return store.values().stream()
+     .filter(member -> member.getName().equals(name))
+     .findAny();
+   }
+   
+   public void clearStore() { //Test시 하나 종료하면 정리하기 위한 메소드
+     store.clear();
+   }
+  }
+  ```
 ---
 
 ### 회원 리포지토리 테스트 케이스 작성
@@ -223,18 +225,18 @@ public class MemberService {
   }
   ```
 - 회원 서비스 코드를 DI(의존성) 가능하게 변경 가능
-```java
-public class MemberService {
-    
- private final MemberRepository memberRepository;
- 
- public MemberService(MemberRepository memberRepository) {
-     
-    this.memberRepository = memberRepository;
- }
-
-}
-```
+  ```java
+  public class MemberService {
+      
+   private final MemberRepository memberRepository;
+   
+   public MemberService(MemberRepository memberRepository) {
+       
+      this.memberRepository = memberRepository;
+   }
+  
+  }
+  ```
 - 회원 서비스 테스트
   ```java
   import hello.hellospring.domain.Member;
